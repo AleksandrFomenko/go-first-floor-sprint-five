@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"time"
 )
 
@@ -99,7 +100,9 @@ func (w Walking) Calories() float64 {
 	if w.Height == 0 {
 		return 0
 	}
-	return ((CaloriesWeightMultiplier*w.Wieght + (w.meanSpeed()*2/(w.Height/CmInM))*CaloriesSpeedHeightMultiplier*w.Wieght) * w.Duration.Hours() * MinInHours)
+	//((CaloriesWeightMultiplier * вес_спортсмена_в_кг + (средняя_скорость_в_метрах_в_секунду**2 / рост_в_метрах) * CaloriesSpeedHeightMultiplier * вес_спортсмена_в_кг)
+	//* время_тренировки_в_часах * MinInHours)
+	return ((CaloriesWeightMultiplier*w.Wieght + (math.Pow(w.meanSpeed()*0.278, 2)/(w.Height/CmInM))*CaloriesSpeedHeightMultiplier*w.Wieght) * w.Duration.Hours() * MinInHours)
 }
 
 func (w Walking) TrainingInfo() InfoMessage {
